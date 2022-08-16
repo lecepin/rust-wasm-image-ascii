@@ -1,0 +1,12 @@
+{
+  "name": "rust-wasm-image-ascii",
+  "version": "0.1.0",
+  "files": [
+    "rust_wasm_image_ascii_bg.wasm",
+    "rust_wasm_image_ascii.js",
+    "rust_wasm_image_ascii.d.ts"
+  ],
+  "module": "rust_wasm_image_ascii.js",
+  "types": "rust_wasm_image_ascii.d.ts",
+  "sideEffects": false
+}
