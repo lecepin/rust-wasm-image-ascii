@@ -45,7 +45,7 @@
 
 [https://lecepin.github.io/rust-wasm-image-ascii/gray.html](https://lecepin.github.io/rust-wasm-image-ascii/gray.html)
 
-![](./docs/1.webp)
+![](./docs/001.webp)
 
 这里直接使用的 `image` crate 的内置算法，上图中的第三种：
 
@@ -65,4 +65,4 @@ pub fn get_luminance(r: u8, g: u8, b: u8) -> f32 {
 
 简单版本只做了一种效果，访问地址： [https://lecepin.github.io/rust-wasm-image-ascii/test.html](https://lecepin.github.io/rust-wasm-image-ascii/test.html)
 
-![](./docs/2.webp)
+![](./docs/02.webp)
