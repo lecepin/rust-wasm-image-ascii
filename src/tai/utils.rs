@@ -1,4 +1,4 @@
-use crate::arguments::config::Config;
+use crate::tai::arguments::config::Config;
 use image::{DynamicImage, GenericImageView, GrayImage, RgbaImage};
 
 // luminance formula credits: https://stackoverflow.com/a/596243
@@ -20,7 +20,7 @@ pub fn colorize(rgb: &[u8; 3], ch: char, bg_fg: u8) -> String {
 
 //rescale the image and convert to image buffer
 pub fn open_and_resize(config: &Config) -> Option<RgbaImage> {
-    let img = if let Ok(image) = image::open(&config.image_file) {
+    let img = if let Ok(image) = image::load_from_memory(&config.image_file_u8) {
         image
     } else {
         eprintln!("Image path is not correct, OR image format is not supported!\n try -h | --help");
@@ -59,7 +59,7 @@ pub fn resize(img: DynamicImage, config: &Config) -> RgbaImage {
 // this will open the image path,
 // and resize the image and turn it into image buffer;
 pub fn get_luma_buffer(config: &Config) -> Option<GrayImage> {
-    let img = if let Ok(image) = image::open(&config.image_file) {
+    let img = if let Ok(image) = image::load_from_memory(&config.image_file_u8) {
         image
     } else {
         eprintln!("Image path is not correct, OR image format is not supported!\n try -h | --help");

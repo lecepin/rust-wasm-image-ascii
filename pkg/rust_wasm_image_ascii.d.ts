@@ -14,6 +14,14 @@ export function get_gray_image(raw: Uint8Array, scale: number): Uint8Array;
 */
 export function get_ascii_by_image(raw: Uint8Array, scale: number, revert: boolean): string;
 /**
+* @param {Uint8Array} raw
+* @param {number} scale
+* @param {boolean} revert
+* @param {string} style
+* @returns {string}
+*/
+export function get_ascii_by_image_tai(raw: Uint8Array, scale: number, revert: boolean, style: string): string;
+/**
 */
 export function run(): void;
 
@@ -23,6 +31,7 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly get_gray_image: (a: number, b: number, c: number, d: number) => void;
   readonly get_ascii_by_image: (a: number, b: number, c: number, d: number, e: number) => void;
+  readonly get_ascii_by_image_tai: (a: number, b: number, c: number, d: number, e: number, f: number, g: number) => void;
   readonly run: () => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_malloc: (a: number) => number;

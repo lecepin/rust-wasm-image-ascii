@@ -1,5 +1,10 @@
+mod tai;
 mod utils;
 
+use crate::tai::{
+    arguments::config::Config,
+    operations::{ascii::img_to_ascii, braille::img_to_braille, onechar::img_to_onechar},
+};
 use crate::utils::log;
 use image::{
     codecs::jpeg::JpegEncoder, imageops::FilterType, load_from_memory, ColorType, GenericImageView,
@@ -73,6 +78,53 @@ pub fn get_ascii_by_image(raw: Vec<u8>, scale: u32, revert: bool) -> String {
     }
 
     result
+}
+
+#[wasm_bindgen]
+pub fn get_ascii_by_image_tai(raw: Vec<u8>, scale: u32, revert: bool, style: &str) -> String {
+    let mut config = Config::default();
+
+    config.image_file_u8 = raw;
+    config.scale = scale;
+    config.revert = revert;
+
+    match style {
+        "OneChar" => img_to_onechar(config),
+        "Braille" => img_to_braille(config),
+        "Ascii" => {
+            let mut table = vec![
+                ' ', ' ', ' ', ' ', '.', '.', '.', ',', ',', ',', '\'', ';', ':', '7', '3', 'l',
+                'o', 'b', 'd', 'x', 'k', 'O', '0', 'K', 'X', 'N', 'W', 'M',
+            ];
+
+            if config.revert {
+                table.reverse();
+            }
+
+            img_to_ascii(config, &table)
+        }
+        "Numbers" => {
+            let mut table = vec![
+                ' ', ' ', ' ', ' ', '0', '1', '7', '6', '9', '4', '2', '3', '8',
+            ];
+
+            if config.revert {
+                table.reverse();
+            }
+
+            img_to_ascii(config, &table)
+        }
+        "Blocks" => {
+            let mut table = vec![' ', ' ', ' ', ' ', '░', '▒', '▓', '█'];
+
+            if config.revert {
+                table.reverse();
+            }
+
+            img_to_ascii(config, &table)
+        }
+        _ => "".to_string(),
+    }
 }
 
 #[wasm_bindgen(start)]

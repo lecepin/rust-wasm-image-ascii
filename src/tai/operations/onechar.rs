@@ -1,6 +1,6 @@
-use crate::arguments::config::Config;
-use crate::operations::otsu_threshold::OtsuThreshold;
-use crate::utils::get_luma_buffer;
+use crate::tai::arguments::config::Config;
+use crate::tai::operations::otsu_threshold::OtsuThreshold;
+use crate::tai::utils::get_luma_buffer;
 use image::Luma;
 
 //  will make the image to ONLY black and white
@@ -9,22 +9,26 @@ use image::Luma;
 // below we are using Otsu's thresholding which is automatically finds
 // the best threshold value
 // https://en.wikipedia.org/wiki/Otsu%27s_method
-pub fn img_to_onechar(config: Config) {
+pub fn img_to_onechar(config: Config) -> String {
     let mut img: image::ImageBuffer<image::Luma<u8>, Vec<u8>> = match get_luma_buffer(&config) {
         Some(img) => img,
-        None => return,
+        None => return "".to_string(),
     };
+    let mut result = "".to_string();
+
     img.threshold();
     for y in 0..img.height() {
         for x in 0..img.width() {
             let pixel = img.get_pixel(x, y);
             if *pixel == Luma([255]) {
-                print!("{}", config.onechar);
+                result.push(config.onechar);
             } else {
-                print!(" ");
+                result.push('\n');
             }
         }
-        println!();
+        result.push('\n');
     }
-    println!();
+    result.push('\n');
+
+    result
 }

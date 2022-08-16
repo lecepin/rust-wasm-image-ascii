@@ -1,4 +1,4 @@
-use crate::arguments::argument_parsing;
+// use crate::tai::arguments::argument_parsing;
 
 #[derive(Debug)]
 pub enum Style {
@@ -23,6 +23,8 @@ pub struct Config {
     pub style: Style,
     pub table: Vec<char>,
     pub once: bool,
+    pub image_file_u8: Vec<u8>,
+    pub revert: bool,
 }
 
 impl Default for Style {
@@ -46,15 +48,17 @@ impl Default for Config {
             style: Style::default(),
             table: vec![],
             once: false,
+            image_file_u8: vec![],
+            revert: false,
         }
     }
 }
 
-impl Config {
-    // Parsing arguments and return a valid config
-    pub fn new(args: &mut std::env::Args) -> Option<Self> {
-        // converting from iterator to vector.
-        let args: Vec<String> = args.collect();
-        argument_parsing::parse(args)
-    }
-}
+// impl Config {
+//     // Parsing arguments and return a valid config
+//     pub fn new(args: &mut std::env::Args) -> Option<Self> {
+//         // converting from iterator to vector.
+//         let args: Vec<String> = args.collect();
+//         argument_parsing::parse(args)
+//     }
+// }

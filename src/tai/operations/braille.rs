@@ -1,7 +1,7 @@
-use crate::arguments::config::Config;
-use crate::operations::dither::Dither;
-use crate::utils::*;
-use image::{gif::GifDecoder, AnimationDecoder, DynamicImage, RgbaImage};
+use crate::tai::arguments::config::Config;
+use crate::tai::operations::dither::Dither;
+use crate::tai::utils::*;
+use image::{codecs::gif::GifDecoder, AnimationDecoder, DynamicImage, RgbaImage};
 use std::{fs::File, thread::sleep, time::Duration};
 
 use super::otsu_threshold::OtsuThreshold;
@@ -17,19 +17,14 @@ use super::otsu_threshold::OtsuThreshold;
 - calculate the number and print a char based on it
 */
 
-pub fn img_to_braille(config: Config) {
+pub fn img_to_braille(config: Config) -> String {
     // checking if its animated
     if config.image_file.ends_with(".gif") {
         print_animated_image(&config);
     } else {
         // checking the image file is valid,if so opening the image.
-        let img = if let Ok(image) = image::open(&config.image_file) {
-            image
-        } else {
-            return eprintln!(
-                "Image path is not correct, OR image format is not supported!\n try -h | --help"
-            );
-        };
+        let img = image::load_from_memory(&config.image_file_u8).unwrap();
+
         // resizing the image and converting it to "imagebuffer",
         let mut img = resize(img, &config);
         // checking if the user wants to dither the image.
@@ -37,8 +32,9 @@ pub fn img_to_braille(config: Config) {
             img.dither(config.dither_scale);
         };
 
-        print_static(&img, &config);
+        return print_static(&img, &config);
     }
+    "".to_string()
 }
 
 // taking a threshold value, image buffer, and origin pixel coordinates(x,y);
@@ -99,10 +95,11 @@ fn translate(map: &mut [[u8; 2]; 4]) -> char {
 }
 
 // process a static image
-fn print_static(img: &RgbaImage, config: &Config) {
+fn print_static(img: &RgbaImage, config: &Config) -> String {
     let best_threshold = DynamicImage::ImageRgba8(img.clone())
         .into_luma8()
         .get_otsu_value();
+    let mut result = String::new();
 
     for y in (0..img.height() - 4).step_by(4) {
         for x in (0..img.width() - 2).step_by(2) {
@@ -112,11 +109,14 @@ fn print_static(img: &RgbaImage, config: &Config) {
                 let [r, g, b, _] = img.get_pixel(x, y).0;
                 print!("{}", colorize(&[r, g, b], ch, config.background));
             } else {
-                print!("{}", ch);
+                // print!("{}", ch);
+                result.push(ch);
             }
         }
-        println!()
+        result.push('\n');
     }
+
+    result
 }
 
 fn loop_the_animation(config: &Config, frames: &[String]) {

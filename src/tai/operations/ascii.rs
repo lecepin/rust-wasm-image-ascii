@@ -1,7 +1,7 @@
-use crate::arguments::config::Config;
-use crate::operations::dither::Dither;
-use crate::utils::{colorize, get_luminance, open_and_resize, resize};
-use image::{gif::GifDecoder, AnimationDecoder, DynamicImage, RgbaImage};
+use crate::tai::arguments::config::Config;
+use crate::tai::operations::dither::Dither;
+use crate::tai::utils::{colorize, get_luminance, open_and_resize, resize};
+use image::{codecs::gif::GifDecoder, AnimationDecoder, DynamicImage, RgbaImage};
 use std::{fs::File, thread::sleep, time::Duration};
 
 /* STATIC IMAGES
@@ -24,12 +24,14 @@ algorithm for animated images work this way:
 */
 
 // img_to_ascii converts to ascii,numbers,blocks
-pub fn img_to_ascii(config: Config, table: &[char]) {
+pub fn img_to_ascii(config: Config, table: &[char]) -> String {
     if config.image_file.ends_with(".gif") {
         print_animated_image(&config, table);
     } else {
-        print_static_image(&config, table);
+        return print_static_image(&config, table);
     }
+
+    "".to_string()
 }
 
 // this function will loop into a small chunck of pixels (2*2) and return a string containing a character
@@ -55,11 +57,12 @@ fn get_char(img: &RgbaImage, config: &Config, table: &[char], x: u32, y: u32) ->
     cha
 }
 // process a static image
-fn print_static_image(config: &Config, table: &[char]) {
+fn print_static_image(config: &Config, table: &[char]) -> String {
     let mut img = match open_and_resize(config) {
         Some(img) => img,
-        None => return,
+        None => return "".to_string(),
     };
+    let mut result = String::new();
 
     if config.dither {
         img.dither(config.dither_scale);
@@ -68,11 +71,16 @@ fn print_static_image(config: &Config, table: &[char]) {
     for y in (0..img.height() - 2).step_by(2) {
         for x in (0..img.width() - 2).step_by(2) {
             let ch = get_char(&img, config, table, x, y);
-            print!("{}", ch);
+            // print!("{}", ch);
+            result.push_str(&ch);
         }
-        println!();
+        // println!();
+        result.push('\n');
     }
-    println!();
+    // println!();
+    result.push('\n');
+
+    result
 }
 
 fn loop_the_animation(config: &Config, frames: &[String]) {
