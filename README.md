@@ -66,3 +66,20 @@ pub fn get_luminance(r: u8, g: u8, b: u8) -> f32 {
 简单版本只做了一种效果，访问地址： [https://lecepin.github.io/rust-wasm-image-ascii/test.html](https://lecepin.github.io/rust-wasm-image-ascii/test.html)
 
 ![](./docs/02.webp)
+
+## 安装&使用
+
+```
+<script type="module">
+  import initWasm, {
+    get_gray_image,
+    get_ascii_by_image,
+    get_ascii_by_image_tai,
+  } from "./pkg/rust_wasm_image_ascii.js";
+
+  initWasm()
+    .then(() => {});
+</script>
+```
+
+可以直接使用仓库中 `pkg/` 目录中的文件，也可以使用 upkg 的资源 https://unpkg.com/browse/rust-wasm-image-ascii/，也可以 `npm install rust-wasm-image-ascii` 使用。
