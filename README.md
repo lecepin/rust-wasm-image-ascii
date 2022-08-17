@@ -91,6 +91,4 @@ pub fn get_luminance(r: u8, g: u8, b: u8) -> f32 {
 可以直接使用仓库中 `pkg/` 目录中的文件，也可以使用 upkg 的资源 https://unpkg.com/browse/rust-wasm-image-ascii/ ，也可以 `npm install rust-wasm-image-ascii` 使用。
 
 接口描述参考这里：[pkg/rust_wasm_image_ascii.d.ts](./pkg/rust_wasm_image_ascii.d.ts)
-接口描述
-接口描述
 
