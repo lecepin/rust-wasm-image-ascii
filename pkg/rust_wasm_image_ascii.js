@@ -83,15 +83,15 @@ export function get_gray_image(raw, scale) {
 /**
 * @param {Uint8Array} raw
 * @param {number} scale
-* @param {boolean} revert
+* @param {boolean} reverse
 * @returns {string}
 */
-export function get_ascii_by_image(raw, scale, revert) {
+export function get_ascii_by_image(raw, scale, reverse) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         const ptr0 = passArray8ToWasm0(raw, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
-        wasm.get_ascii_by_image(retptr, ptr0, len0, scale, revert);
+        wasm.get_ascii_by_image(retptr, ptr0, len0, scale, reverse);
         var r0 = getInt32Memory0()[retptr / 4 + 0];
         var r1 = getInt32Memory0()[retptr / 4 + 1];
         return getStringFromWasm0(r0, r1);
@@ -156,18 +156,18 @@ function passStringToWasm0(arg, malloc, realloc) {
 /**
 * @param {Uint8Array} raw
 * @param {number} scale
-* @param {boolean} revert
+* @param {boolean} reverse
 * @param {string} style
 * @returns {string}
 */
-export function get_ascii_by_image_tai(raw, scale, revert, style) {
+export function get_ascii_by_image_tai(raw, scale, reverse, style) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         const ptr0 = passArray8ToWasm0(raw, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
         const ptr1 = passStringToWasm0(style, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len1 = WASM_VECTOR_LEN;
-        wasm.get_ascii_by_image_tai(retptr, ptr0, len0, scale, revert, ptr1, len1);
+        wasm.get_ascii_by_image_tai(retptr, ptr0, len0, scale, reverse, ptr1, len1);
         var r0 = getInt32Memory0()[retptr / 4 + 0];
         var r1 = getInt32Memory0()[retptr / 4 + 1];
         return getStringFromWasm0(r0, r1);

@@ -9,7 +9,7 @@ use image::Luma;
 // below we are using Otsu's thresholding which is automatically finds
 // the best threshold value
 // https://en.wikipedia.org/wiki/Otsu%27s_method
-pub fn img_to_onechar(config: Config) -> String {
+pub fn img_to_onechar(config: Config, reverse: bool) -> String {
     let mut img: image::ImageBuffer<image::Luma<u8>, Vec<u8>> = match get_luma_buffer(&config) {
         Some(img) => img,
         None => return "".to_string(),
@@ -21,9 +21,9 @@ pub fn img_to_onechar(config: Config) -> String {
         for x in 0..img.width() {
             let pixel = img.get_pixel(x, y);
             if *pixel == Luma([255]) {
-                result.push(config.onechar);
+                result.push(if !reverse { config.onechar } else { ' ' });
             } else {
-                result.push('\n');
+                result.push(if reverse { config.onechar } else { ' ' });
             }
         }
         result.push('\n');

@@ -6,6 +6,10 @@
   </head>
 
   <body>
+    <div id="progress">
+      <br />
+      WASM 文件加载中… <progress></progress><br />
+    </div>
     <h2>Rust-image-ascii</h2>
     <input type="file" id="img_file" accept="image/*" />
     <label
@@ -74,6 +78,9 @@
           };
           file && reader.readAsArrayBuffer(file);
         };
+      }) 
+      .finally(() => {
+        document.getElementById("progress").style.display = "none";
       });
 
       copy.onclick = () => {

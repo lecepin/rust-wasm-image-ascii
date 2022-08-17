@@ -9,18 +9,18 @@ export function get_gray_image(raw: Uint8Array, scale: number): Uint8Array;
 /**
 * @param {Uint8Array} raw
 * @param {number} scale
-* @param {boolean} revert
+* @param {boolean} reverse
 * @returns {string}
 */
-export function get_ascii_by_image(raw: Uint8Array, scale: number, revert: boolean): string;
+export function get_ascii_by_image(raw: Uint8Array, scale: number, reverse: boolean): string;
 /**
 * @param {Uint8Array} raw
 * @param {number} scale
-* @param {boolean} revert
+* @param {boolean} reverse
 * @param {string} style
 * @returns {string}
 */
-export function get_ascii_by_image_tai(raw: Uint8Array, scale: number, revert: boolean, style: string): string;
+export function get_ascii_by_image_tai(raw: Uint8Array, scale: number, reverse: boolean, style: string): string;
 /**
 */
 export function run(): void;

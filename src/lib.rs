@@ -38,7 +38,7 @@ pub fn get_gray_image(raw: Vec<u8>, scale: u32) -> Vec<u8> {
 }
 
 #[wasm_bindgen]
-pub fn get_ascii_by_image(raw: Vec<u8>, scale: u32, revert: bool) -> String {
+pub fn get_ascii_by_image(raw: Vec<u8>, scale: u32, reverse: bool) -> String {
     let img = load_from_memory(&raw).unwrap();
     let img = img
         .resize(
@@ -51,7 +51,7 @@ pub fn get_ascii_by_image(raw: Vec<u8>, scale: u32, revert: bool) -> String {
     let mut current_line = 0;
     let mut result = "".to_string();
 
-    if revert {
+    if reverse {
         pallete.reverse();
     }
 
@@ -81,15 +81,15 @@ pub fn get_ascii_by_image(raw: Vec<u8>, scale: u32, revert: bool) -> String {
 }
 
 #[wasm_bindgen]
-pub fn get_ascii_by_image_tai(raw: Vec<u8>, scale: u32, revert: bool, style: &str) -> String {
+pub fn get_ascii_by_image_tai(raw: Vec<u8>, scale: u32, reverse: bool, style: &str) -> String {
     let mut config = Config::default();
 
     config.image_file_u8 = raw;
     config.scale = scale;
-    config.revert = revert;
+    config.reverse = reverse;
 
     match style {
-        "OneChar" => img_to_onechar(config),
+        "OneChar" => img_to_onechar(config, reverse),
         "Braille" => img_to_braille(config),
         "Ascii" => {
             let mut table = vec![
@@ -97,7 +97,7 @@ pub fn get_ascii_by_image_tai(raw: Vec<u8>, scale: u32, revert: bool, style: &st
                 'o', 'b', 'd', 'x', 'k', 'O', '0', 'K', 'X', 'N', 'W', 'M',
             ];
 
-            if config.revert {
+            if config.reverse {
                 table.reverse();
             }
 
@@ -108,7 +108,7 @@ pub fn get_ascii_by_image_tai(raw: Vec<u8>, scale: u32, revert: bool, style: &st
                 ' ', ' ', ' ', ' ', '0', '1', '7', '6', '9', '4', '2', '3', '8',
             ];
 
-            if config.revert {
+            if config.reverse {
                 table.reverse();
             }
 
@@ -117,7 +117,7 @@ pub fn get_ascii_by_image_tai(raw: Vec<u8>, scale: u32, revert: bool, style: &st
         "Blocks" => {
             let mut table = vec![' ', ' ', ' ', ' ', '░', '▒', '▓', '█'];
 
-            if config.revert {
+            if config.reverse {
                 table.reverse();
             }
 

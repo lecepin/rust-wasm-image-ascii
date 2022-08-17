@@ -24,7 +24,7 @@ pub struct Config {
     pub table: Vec<char>,
     pub once: bool,
     pub image_file_u8: Vec<u8>,
-    pub revert: bool,
+    pub reverse: bool,
 }
 
 impl Default for Style {
@@ -49,7 +49,7 @@ impl Default for Config {
             table: vec![],
             once: false,
             image_file_u8: vec![],
-            revert: false,
+            reverse: false,
         }
     }
 }
