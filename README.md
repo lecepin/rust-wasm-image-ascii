@@ -69,7 +69,7 @@ pub fn get_luminance(r: u8, g: u8, b: u8) -> f32 {
 
 ## 安装&使用
 
-```
+```html
 <script type="module">
   import initWasm, {
     get_gray_image,
