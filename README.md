@@ -67,6 +67,12 @@ pub fn get_luminance(r: u8, g: u8, b: u8) -> f32 {
 
 ![](./docs/02.webp)
 
+### Tai 版本
+
+看到一个支持 ASCII 种类挺多的 Rust 项目 https://github.com/MustafaSalih1993/tai ，于是将这个项目的 IO 部分进行了修改，适配 WASM 进行了编译处理。
+
+![](./docs/03.webp)
+
 ## 安装&使用
 
 ```html
