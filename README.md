@@ -45,7 +45,8 @@
 
 [https://lecepin.github.io/rust-wasm-image-ascii/gray.html](https://lecepin.github.io/rust-wasm-image-ascii/gray.html)
 
-![Xnip2022-08-18_10-06-21](https://user-images.githubusercontent.com/11046969/185297040-9538fcf0-c150-4570-89cf-cf358ddad413.jpg)
+![image](https://user-images.githubusercontent.com/11046969/185297221-e4441e32-5802-418c-a3bf-e9f9900966e3.png)
+
 
 这里直接使用的 `image` crate 的内置算法，上图中的第三种：
 
